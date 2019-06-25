@@ -1,0 +1,15 @@
+#!/usr/bin/env node
+
+const program = require("commander"),
+  packageInfo = require("./package.json"),
+  proxyApp = require("./app/app");
+
+program
+  .version(packageInfo.version)
+  .option("-p, --port [value]", "proxy port", "8001")
+  .option("-w, --web [value]", "web GUI port", "8002")
+  .option("-p, --path <rule file path>", "json path")
+  .option("-c, --clean", "Clear cache")
+  .parse(process.argv);
+
+return proxyApp.startProxy(program);

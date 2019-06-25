@@ -1,0 +1,10 @@
+[
+  {
+    "url": "/v2/api/test",
+    "statusCode": 200,
+    "headers": {
+      "content-type": "application/json"
+    },
+    "responseFile": "test.json"
+  }
+]
