@@ -4,8 +4,12 @@ const path = require("path");
 const defaultHeaders = { 'content-type': 'application/json' };
 
 module.exports = function getRule(program) {
-  const rules = JSON.parse(fs.readFileSync(program.path, "utf8"));
-
+  rules = {};
+  try {
+    rules = JSON.parse(fs.readFileSync(program.path, "utf8"));
+  } catch (e) {
+    console.log(`${colors.red('Error')} : Please input correct file path for rule \n ${colors.red(e.message)} \n\n`)
+  }
   return {
     *onError(requestDetail, error) {
       console.log("Error eccured:", error);
@@ -36,4 +40,5 @@ module.exports = function getRule(program) {
     },
 
   };
+
 };
