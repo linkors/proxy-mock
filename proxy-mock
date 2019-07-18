@@ -8,7 +8,7 @@ program
   .version(packageInfo.version)
   .option("-p, --port [value]", "proxy port", "8001")
   .option("-w, --web [value]", "web GUI port", "8002")
-  .option("-p, --path <rule file path | default on sample/source.json>", "json path")
+  .option("--path <rule file path | default on sample/source.json>", "json path")
   .option("-c, --clean", "Clear cache")
   .parse(process.argv);
 

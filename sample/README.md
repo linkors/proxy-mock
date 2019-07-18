@@ -8,6 +8,7 @@
     "headers": <headers as object | default {"content-type": "application/json"}>,
     "responseFile": <read response from file>,
     "responseBody": <response>,
+    "dataToKeep": <array of object name to be keep from request and will be returned back on response - optional>,
   },
   {
     "url": "/v2/api/getUser",
@@ -15,7 +16,8 @@
     "headers": {
       "content-type": "application/json"
     },
-    "responseFile": "test.json"
+    "responseFile": "test.json",
+    "dataToKeep": ["nonce"]
   }
   ...
 ]
