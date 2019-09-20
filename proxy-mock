@@ -9,6 +9,7 @@ program
   .option("-p, --port [value]", "proxy port", "8001")
   .option("-w, --web [value]", "web GUI port", "8002")
   .option("--path <rule file path | default on sample/source.json>", "json path")
+  .option("-s, --setglobalproxy", "if you want to automatically set global proxy on start")
   .option("-c, --clean", "Clear cache")
   .parse(process.argv);
 

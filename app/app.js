@@ -1,6 +1,21 @@
 const AnyProxy = require("anyproxy");
 const getRule = require("./rule");
 const colors = require('colors');
+const readline = require('readline');
+readline.emitKeypressEvents(process.stdin);
+process.stdin.setRawMode(true);
+
+function setGlobalProxy(host, port) {
+  console.log(colors.bold(`${colors.green('Set')} global proxy...`));
+  AnyProxy.utils.systemProxyMgr.enableGlobalProxy(host, port);
+  AnyProxy.utils.systemProxyMgr.enableGlobalProxy(host, port, 'https');
+}
+
+function unsetGlobalProxy() {
+  console.log(colors.bold(`${colors.yellow('Unset')} global proxy...`));
+  AnyProxy.utils.systemProxyMgr.disableGlobalProxy();
+  AnyProxy.utils.systemProxyMgr.disableGlobalProxy('https');
+}
 
 module.exports = {
   startProxy: function (program) {
@@ -34,15 +49,32 @@ module.exports = {
     });
     proxyServer.start();
 
-    // Exit by ctrl+c
-    process.on("SIGINT", () => {
-      console.log(colors.bold('Stopping proxy server ...'));
-      try {
-        proxyServer && proxyServer.close();
-      } catch (e) {
-        console.error(e);
+    if (program['setglobalproxy']) {
+      setGlobalProxy('localhost', options.port);
+    }
+
+    process.stdin.on('keypress', (str, key) => {
+      if (key.ctrl && key.name === 's') {
+        var re = new RegExp(/Enabled:(.*)/);
+        var r = AnyProxy.utils.systemProxyMgr.getProxyState().stdout.match(re);
+
+        if (r && r[1].trim() === 'No') {
+          setGlobalProxy('localhost', options.port);
+        } else if (r && r[1].trim() === 'Yes') {
+          unsetGlobalProxy();
+        }
+      } else if (key.ctrl && key.name === 'c') {
+        console.log(colors.bold('Stopping proxy server ...'));
+        try {
+          proxyServer && proxyServer.close();
+          if (program['setglobalproxy']) {
+            unsetGlobalProxy();
+          }
+        } catch (e) {
+          console.error(e);
+        }
+        process.exit();
       }
-      process.exit();
-    });
+    })
   },
 };

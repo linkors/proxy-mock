@@ -56,3 +56,6 @@ typings/
 
 #cache data
 data/
+
+#sample json
+sample/
