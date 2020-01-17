@@ -11,7 +11,7 @@ This package's goal is simply to mock API response. By using proxy, you can inte
 
 ### Step 1: Install Node JS
 
-This project is nodee based app. You can install node js [here](https://nodejs.org/)
+This project is node based app. You can install node js [here](https://nodejs.org/)
 
 ### Step 2: Clone repo
 
@@ -35,7 +35,8 @@ $ node proxy-mock [options]
 ```
 
 These are the list of arguments you can pass:
-| Option | Description | Default
+
+| Option | Description | Default |
 | --- | --- | --- |
 | `-p`, `--port` [value] | Port for proxy | 8001 |
 | `-w`, `--web` [value] | Web GUI port | 8002 |
@@ -48,7 +49,7 @@ These are the list of arguments you can pass:
 This proxy uses `json` rule to intercept the URL. You can see sample config on `sample/source.json`. 
 
 Config properties consists of:
-| Property | Description | Required | Default Value | Example
+| Property | Description | Required | Default Value | Example |
 | --- | --- | --- | --- | --- |
 | `url` | Endpoint URL that _contains_ this value will be intercepted | Yes | - | `/v2/api/getUser` |
 | `statusCode` | Htpp response status | - | 200 | - |
