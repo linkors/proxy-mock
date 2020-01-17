@@ -2,6 +2,9 @@
 
 This package's goal is simply to mock API response. By using proxy, you can intercept and return mock data from any request to specific URL. This project is using [Anyproxy](http://anyproxy.io/en/#rule-module-interface) rule based config to intercept request. You can mock API response based on API contract you have agreed with your team. So that, you can start developing immediately without waiting for API implementation. 
 
+<img width="1060" alt="Screen Shot 2020-01-17 at 18 01 03" src="https://user-images.githubusercontent.com/42864780/72607474-5affbe00-3953-11ea-802a-1d8a8950f507.png">
+
+
 - [Setup](#setup)
 - [Running Proxy-mock](#running-proxy-mock)
 - [Config Source Rule](#config-source-rule)
