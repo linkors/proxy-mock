@@ -20,11 +20,11 @@ function unsetGlobalProxy() {
 module.exports = {
   startProxy: function (program) {
     const options = {
-      port: 8001,
-      rule: getRule(program),
+      port: program.port,
+      rule: program.ignorerule ? null : getRule(program),
       webInterface: {
         enable: true,
-        webPort: 8002
+        webPort: program.web
       },
       throttle: 10000,
       forceProxyHttps: true,
@@ -35,9 +35,9 @@ module.exports = {
 
     proxyServer.on("ready", () => {
       var ip = require("ip");
-      console.log("Proxy server is ready!");
+      console.log("Proxy server is ready!\n");
       console.log(
-        colors.bold("Please set your proxy to ") +
+        colors.bold(program['setglobalproxy'] ? "If your proxy is not set, you can manually set your proxy to " : "Please set your proxy to ") +
         colors.green.bold.underline(ip.address()) +
         colors.bold(" with port ") +
         colors.green.bold.underline(program.port) + "\n\n\n"

@@ -4,12 +4,14 @@ const program = require("commander"),
   packageInfo = require("./package.json"),
   proxyApp = require("./app/app");
 
+
 program
   .version(packageInfo.version)
   .option("-p, --port [value]", "proxy port", "8001")
   .option("-w, --web [value]", "web GUI port", "8002")
   .option("--path <rule file path | default on sample/source.json>", "json path")
   .option("-s, --setglobalproxy", "if you want to automatically set global proxy on start")
+  .option("-i, --ignorerule", "Use this if you just want to check request response")
   .option("-c, --clean", "Clear cache")
   .parse(process.argv);
 
