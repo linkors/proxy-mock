@@ -54,7 +54,7 @@ Config properties consists of:
 | `url` | Endpoint URL that _contains_ this value will be intercepted | Yes | - | `/v2/api/getUser` |
 | `statusCode` | Htpp response status | - | 200 | - |
 | `headers` | Http response header | - | `{"content-type": "application/json"}` | - |
-| `responseFile` | Read response from file (must be a `json` file) | Yes, if `responseBody` is not used. Path is relative to `source`  file | - | `test.json`
+| `responseFile` | Read response from file (must be a `json` file) | Yes, if `responseBody` is not used. Path is relative to `source`  file | - | `test.json` |
 | `responseBody` | Will automatically set global proxy on start | - | - | `{"data":"baloon"}` |
 | `mustLast` | URL must be ended with value that is specified in `url` property | - | - | - |
 | `dataToKeep` | Use this if you want to bring any data from request to response | - | - | `["nonce", "context"]` |
