@@ -54,8 +54,12 @@ typings/
 # next.js build output
 .next
 
+# Mac folder data
+.DS_Store
+
 #cache data
 data/
 
 #sample json
 sample/
+
