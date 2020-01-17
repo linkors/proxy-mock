@@ -49,6 +49,7 @@ These are the list of arguments you can pass:
 This proxy uses `json` rule to intercept the URL. You can see sample config on `sample/source.json`. 
 
 Config properties consists of:
+
 | Property | Description | Required | Default Value | Example |
 | --- | --- | --- | --- | --- |
 | `url` | Endpoint URL that _contains_ this value will be intercepted | Yes | - | `/v2/api/getUser` |
