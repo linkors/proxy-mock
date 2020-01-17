@@ -12,7 +12,6 @@ program
   .option("--path <rule file path | default on sample/source.json>", "json path")
   .option("-s, --setglobalproxy", "if you want to automatically set global proxy on start")
   .option("-i, --ignorerule", "Use this if you just want to check request response")
-  .option("-c, --clean", "Clear cache")
   .parse(process.argv);
 
 return proxyApp.startProxy(program);
