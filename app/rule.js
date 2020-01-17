@@ -22,7 +22,9 @@ module.exports = function getRule(program) {
       return null;
     },
     *beforeSendRequest(requestDetail) {
-      const rule = rules.find(item => requestDetail.url.includes(item.url))
+      const rule = rules.find(item => {
+        return item.mustLast ? requestDetail.url.endsWith(item.url) : requestDetail.url.includes(item.url)
+      })
       if (rule) {
         const requestData = JSON.parse(requestDetail.requestData.toString());
 
