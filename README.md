@@ -115,4 +115,8 @@ Then you need to trust the generated certificate to your browser/device. You can
 _Warning: please keep your root CA safe since it may influence your system security._
 _Note: you only need to do this once._
 
+## Contribute
+
+Feel free to fork to modify it to your own need. Or create pull request to contribute. 
+
 <img width="300" alt="Coding" src="https://media.giphy.com/media/13UZisxBxkjPwI/giphy.gif">
