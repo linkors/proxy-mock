@@ -1,0 +1,15 @@
+{
+  "data": [
+    {
+      "keyword": "test",
+      "category": "c/test",
+      "id": "dadasdwqw"
+    }
+  ],
+  "meta": {
+    "offset": 0,
+    "limit": 10,
+    "total": 1,
+    "http_status": 200
+  }
+}

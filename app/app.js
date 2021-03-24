@@ -15,6 +15,7 @@ function unsetGlobalProxy() {
   console.log(colors.bold(`${colors.yellow('Unset')} global proxy...`));
   AnyProxy.utils.systemProxyMgr.disableGlobalProxy();
   AnyProxy.utils.systemProxyMgr.disableGlobalProxy('https');
+  proxy.stop();
 }
 
 module.exports = {

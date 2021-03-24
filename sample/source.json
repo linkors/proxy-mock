@@ -1,10 +1,11 @@
 [
   {
-    "url": "/v2/api/test",
+    "url": "/_exclusive/seo-keywords",
     "statusCode": 200,
     "headers": {
-      "content-type": "application/json"
+      "content-type": "application/json",
+      "Access-Control-Allow-Origin": "*"
     },
-    "responseFile": "test.json"
+    "responseFile": "response.json"
   }
 ]

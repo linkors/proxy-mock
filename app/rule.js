@@ -1,14 +1,25 @@
+require('dotenv').config()
 const colors = require('colors');
 const fs = require("fs");
 const path = require("path");
-const defaultHeaders = { 'content-type': 'application/json' };
+const { getExtension } = require("./utils");
+
+const defaultHeaders = { 'content-type': 'application/json', 'Access-Control-Allow-Origin': '*' };
 
 module.exports = function getRule(program) {
   rules = {};
   let sourcePath = '';
   try {
-    sourcePath = program.path || './sample/source.json';
-    rules = JSON.parse(fs.readFileSync(sourcePath, "utf8"));
+    sourcePath = program.path || process.env.DEFAULT_SOURCE_PATH || './sample/source.json';
+    const sourceExtension = getExtension(sourcePath);
+    if (sourceExtension === 'json') {
+      rules = JSON.parse(fs.readFileSync(sourcePath, "utf8"));
+    } else if (sourceExtension === 'js') {
+      const modulePath = path.resolve(process.cwd(), sourcePath);
+      rules = require(modulePath);
+    } else {
+      throw new Error("Only json or js extension allowed");
+    }
   } catch (e) {
     console.log(`${colors.red('Error')} : Please input correct file path for rule \n ${colors.red(e.message)} \n\n`)
   }
@@ -23,10 +34,14 @@ module.exports = function getRule(program) {
     },
     *beforeSendRequest(requestDetail) {
       const rule = rules.find(item => {
-        return item.mustLast ? requestDetail.url.endsWith(item.url) : requestDetail.url.includes(item.url)
+        return typeof item.url === 'object' ? item.url.test(requestDetail.url) : requestDetail.url.includes(item.url)
       })
       if (rule) {
-        const requestData = JSON.parse(requestDetail.requestData.toString());
+        let requestData = {};
+        const requestString = requestDetail.requestData.toString();
+        if (requestString) {
+          requestData = JSON.parse(requestString);
+        }
 
         let extraData = {};
         if (rule.dataToKeep) {
@@ -39,20 +54,30 @@ module.exports = function getRule(program) {
 
         console.log(`<REQ> \n ${colors.yellow(requestData)} \n`)
 
+        let response = {};
+
         if (rule.responseFile) {
-          responseBody = fs.readFileSync(`${path.dirname(sourcePath)}/${rule.responseFile}`, "utf8");
+          const responseFilePath = path.resolve(path.dirname(sourcePath), rule.responseFile);
+          const responseFileExt = getExtension(responseFilePath);
+
+          if (responseFileExt === 'json') {
+            response = fs.readFileSync(responseFilePath, "utf8");
+          } else if (responseFileExt === 'js') {
+            delete require.cache[responseFilePath];
+            response = require(responseFilePath)(requestDetail);
+          }
         } else {
-          responseBody = rule.response;
+          response = rule.response;
         }
 
-        const responseData = Object.assign(JSON.parse(responseBody), extraData);
+        const responseData = Object.assign(typeof response !== 'object' ? JSON.parse(response) : (response.responseBody || response), extraData);
 
         console.log(`<RES> \n ${colors.green(responseData)} \n`)
 
         return {
           response: {
-            statusCode: rule.statusCode || 200,
-            header: { ...defaultHeaders, ...rule.headers },
+            statusCode: response.statusCode || rule.statusCode || 200,
+            header: { ...defaultHeaders, ...rule.headers, ...response.headers },
             body: JSON.stringify(responseData)
           }
         };

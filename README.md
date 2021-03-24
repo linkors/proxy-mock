@@ -43,29 +43,64 @@ These are the list of arguments you can pass:
 | --- | --- | --- |
 | `-p`, `--port` [value] | Port for proxy | 8001 |
 | `-w`, `--web` [value] | Web GUI port | 8002 |
-| `--path` [rule file path]| Web GUI port | `sample/source.json` |
+| `--path` [rule file path]| Source location. Relative to where you run the command | `sample/source.json` |
 | `-s`, `--setglobalproxy`| Will automatically set global proxy on start | - |
 | `-i`, `--ignorerule`| Use this if you just want to check request response. It will ignore defined rule. | - |
 
 ## Config Source Rule 
 
-This proxy uses `json` rule to intercept the URL. You can see sample config on `sample/source.json`. 
+There are 2 ways to set source rule, use `json` or javascript(`js`) file. The file will contain list of rules of url to be intercepted . You can see sample config on `sample/source.json` or `sample/source.js`. 
 
 Config properties consists of:
 
-| Property | Description | Required | Default Value | Example |
-| --- | --- | --- | --- | --- |
-| `url` | Endpoint URL that _contains_ this value will be intercepted | Yes | - | `/v2/api/getUser` |
-| `statusCode` | Htpp response status | - | 200 | - |
-| `headers` | Http response header | - | `{"content-type": "application/json"}` | - |
-| `responseFile` | Read response from file (must be a `json` file) | Yes, if `responseBody` is not used. Path is relative to `source`  file | - | `test.json` |
-| `responseBody` | Will automatically set global proxy on start | - | - | `{"data":"baloon"}` |
-| `mustLast` | URL must be ended with value that is specified in `url` property | - | - | - |
-| `dataToKeep` | Use this if you want to bring any data from request to response | - | - | `["nonce", "context"]` |
+| Property | Type | Description | Required | Default Value | Example |
+| --- | --- | --- | --- | --- | --- |
+| `url` | string \| regex | Endpoint URL that _contains_ this value will be intercepted. Regex can be used in `js` config file. | Yes | - | `/v2/api/getUser` |
+| `statusCode` | number | Htpp response status | - | 200 | - |
+| `headers` | object | Http response header | - | `{"content-type": "application/json", "Access-Control-Allow-Origin": "*"}` | - |
+| `responseFile` | string | Read response from file (must be a `json` or `js` file) | Yes, if `responseBody` is not used. If you use relative path, it is relative to `source` file | - | `test.json` |
+| `responseBody` | string \| number \| object | Will automatically set global proxy on start | - | - | `{"data":"baloon"}` |
+| `dataToKeep` | array | Use this if you want to bring any data from request to response | - | - | `["nonce", "context"]` |
 
-Of course you can modify the implementation of hwo this proxy handle config rule. File `app/rule.js` is what you are looking for.
+Of course you can modify the implementation of how this proxy handle config rule. File `app/rule.js` is what you are looking for.
 
-<img width="300" alt="Coding" src="https://media.giphy.com/media/13UZisxBxkjPwI/giphy.gif">
+## Config Response
+
+After you setup the rule, now you cen setup the mock response. Just like the config source, you can use `json` or `js` file.
+
+I'll explain you by example. Let we want to return this data as response 
+```
+{
+    "data": "such data"
+}
+```
+### Using json
+For `json` version you can just put the mock response directly to the file.
+### Using js
+For `js` version, there is more that you can do. The response must use following template (sample can be seen at `sample/response.js`)
+```
+module.exports = function (requestDetail) {
+    // Data is inside `responseBody`
+    return {
+        responseBody: {
+            "data": "such data"
+        },
+        statusCode: 200, // optional
+        headers: { // optional
+          'test': 'ini header test'
+        }
+    }
+}
+```
+As you can see, you may also override `statusCode` and `headers` from config source here. 
+Other than that, you also receive `requestDetail` as parameter. Use this to provide dynamic reponse based on request you send.
+| Property | Type | Description | Value |
+| --- | --- | --- | --- |
+| protocol | string | request protocol | http or https |
+| requestOptions | object | the options of the request-to-go, a param of require('http').request . ref: https://nodejs.org/api/http.html#http_http_request_options_callback | - |
+| requestData | object | request body | - |
+| url | string | request url | - |
+| _req | object | the native node.js request object | - |
 
 ## Proxy HTTPS
 
@@ -80,4 +115,4 @@ Then you need to trust the generated certificate to your browser/device. You can
 _Warning: please keep your root CA safe since it may influence your system security._
 _Note: you only need to do this once._
 
-
+<img width="300" alt="Coding" src="https://media.giphy.com/media/13UZisxBxkjPwI/giphy.gif">
