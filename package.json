@@ -2,7 +2,7 @@
   "name": "com.linkors.proxymock",
   "version": "1.0.0",
   "description": "App to mock response based on request url",
-  "main": "proxy-mock.js",
+  "main": "proxy-mock",
   "repository": {
     "type": "git",
     "url": "https://github.com/linkors/proxy-mock.git"

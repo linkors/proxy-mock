@@ -43,13 +43,13 @@ These are the list of arguments you can pass:
 | --- | --- | --- |
 | `-p`, `--port` [value] | Port for proxy | 8001 |
 | `-w`, `--web` [value] | Web GUI port | 8002 |
-| `--path` [rule file path]| Source location. Relative to where you run the command | `sample/source.json` |
+| `--path` [rule file path]| Source location. Relative to where you run the command | `mocks/source.json` |
 | `-s`, `--setglobalproxy`| Will automatically set global proxy on start | - |
 | `-i`, `--ignorerule`| Use this if you just want to check request response. It will ignore defined rule. | - |
 
 ## Config Source Rule 
 
-There are 2 ways to set source rule, use `json` or javascript(`js`) file. The file will contain list of rules of url to be intercepted . You can see sample config on `sample/source.json` or `sample/source.js`. 
+There are 2 ways to set source rule, use `json` or javascript(`js`) file. The file will contain list of rules of url to be intercepted . You can see sample config on `mocks/source.json` or `mocks/source.js`. 
 
 Config properties consists of:
 
@@ -77,7 +77,7 @@ I'll explain you by example. Let we want to return this data as response
 ### Using json
 For `json` version you can just put the mock response directly to the file.
 ### Using js
-For `js` version, there is more that you can do. The response must use following template (sample can be seen at `sample/response.js`)
+For `js` version, there is more that you can do. The response must use following template (sample can be seen at `mocks/response.js`)
 ```
 module.exports = function (requestDetail) {
     // Data is inside `responseBody`

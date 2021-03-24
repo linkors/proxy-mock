@@ -6,6 +6,6 @@
       "content-type": "application/json",
       "Access-Control-Allow-Origin": "*"
     },
-    "responseFile": "response.json"
+    "responseFile": "response.js"
   }
 ]

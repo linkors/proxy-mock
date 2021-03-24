@@ -10,7 +10,7 @@ module.exports = function getRule(program) {
   rules = {};
   let sourcePath = '';
   try {
-    sourcePath = program.path || process.env.DEFAULT_SOURCE_PATH || './sample/source.json';
+    sourcePath = program.path || process.env.DEFAULT_SOURCE_PATH || './mocks/source.json';
     const sourceExtension = getExtension(sourcePath);
     if (sourceExtension === 'json') {
       rules = JSON.parse(fs.readFileSync(sourcePath, "utf8"));
@@ -25,11 +25,11 @@ module.exports = function getRule(program) {
   }
   return {
     *onError(requestDetail, error) {
-      console.log("Error eccured:", error);
+      // console.log("Error eccured:", error);
       return null;
     },
     *onConnectError(requestDetail, error) {
-      console.log("Cannot reach server", error);
+      // console.log("Cannot reach server", error);
       return null;
     },
     *beforeSendRequest(requestDetail) {

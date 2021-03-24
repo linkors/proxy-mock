@@ -7,7 +7,7 @@ module.exports = [
     }
   },
   {
-    "url": /\/info\/keyword-redirectors/,
+    "url": "/_exclusive/seo-keywords",
     "statusCode": 200,
     "responseFile": 'response.js'
   },
