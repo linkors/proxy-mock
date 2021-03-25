@@ -10,12 +10,12 @@ module.exports = function getRule(program) {
   rules = {};
   let sourcePath = '';
   try {
-    sourcePath = program.path || process.env.DEFAULT_SOURCE_PATH || './mocks/source.json';
+    sourcePath = path.resolve(__dirname, '../', program.path || process.env.DEFAULT_SOURCE_PATH || './mocks/source.json');
     const sourceExtension = getExtension(sourcePath);
     if (sourceExtension === 'json') {
       rules = JSON.parse(fs.readFileSync(sourcePath, "utf8"));
     } else if (sourceExtension === 'js') {
-      const modulePath = path.resolve(process.cwd(), sourcePath);
+      const modulePath = path.resolve(__dirname, '../', sourcePath);
       rules = require(modulePath);
     } else {
       throw new Error("Only json or js extension allowed");
