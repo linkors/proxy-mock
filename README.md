@@ -32,11 +32,18 @@ $ npm install
 
 ## Running Proxy-mock
 
-You can run `proxy-mock` with 
+You can run `proxy-mock` with entering this in project root folder
 ```bash
 $ node proxy-mock [options]
 ```
 
+or
+
+By globally install the package. You can run this in the root folder
+```bash
+$ npm install -g
+$ proxy-mock [options]
+```
 These are the list of arguments you can pass:
 
 | Option | Description | Default |

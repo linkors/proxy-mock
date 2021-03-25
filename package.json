@@ -7,6 +7,9 @@
     "type": "git",
     "url": "https://github.com/linkors/proxy-mock.git"
   },
+  "bin": {
+    "proxy-mock": "./proxy-mock"
+  },
   "scripts": {
     "start": "node proxy-mock"
   },
