@@ -65,7 +65,7 @@ Config properties consists of:
 | `url` | string \| regex | Endpoint URL that _contains_ this value will be intercepted. Regex can be used in `js` config file. | Yes | - | `/v2/api/getUser` |
 | `statusCode` | number | Htpp response status | - | 200 | - |
 | `headers` | object | Http response header | - | `{"content-type": "application/json", "Access-Control-Allow-Origin": "*"}` | - |
-| `responseFile` | string | Read response from file (must be a `json` or `js` file) | Yes, if `responseBody` is not used. If you use relative path, it is relative to `source` file | - | `test.json` |
+| `responseFile` | string | Read response from file (must be a `json` or `js` file) | Yes, if `responseBody` is not used. It is relative to the `source` file | - | `test.json` |
 | `responseBody` | string \| number \| object | Will automatically set global proxy on start | - | - | `{"data":"baloon"}` |
 | `dataToKeep` | array | Use this if you want to bring any data from request to response | - | - | `["nonce", "context"]` |
 
